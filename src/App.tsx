@@ -1,7 +1,12 @@
+
+import { BrowserRouter as Router } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./App.css";
 import { getUserData } from "./usecases/get-user-data";
 import type { UserDataResponse } from "./usecases/get-user-data";
+import TopHeader from "../src/usecases/components/TopHeader";
+import SideIcons from "./usecases/components/SideIcons";
+import LastNameIdent from "./usecases/components/LastNameIdent";
 
 const USER = 12;
 
@@ -10,14 +15,23 @@ function App() {
 
 	useEffect(() => {
 		const fetchUser = async () => {
-			const user = await getUserData({ userId: USER });
-			setUser(user);
+			const userData = await getUserData({ userId: USER });
+			setUser(userData);
 		};
 
 		fetchUser();
 	}, []);
 
-	return <div className="toto">ok</div>;
+	return (
+		<Router>
+			<TopHeader user={user} />
+			<SideIcons />
+			<LastNameIdent userId={USER} userData={user} />
+		</Router>
+	);
 }
 
 export default App;
+
+
+

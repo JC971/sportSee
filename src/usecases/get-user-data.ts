@@ -17,11 +17,27 @@ export type UserDataResponse = {
 // userId === 12 ou 18
 export const getUserData = async ({
 	userId,
-}: {
-	userId: number;
-}): Promise<UserDataResponse> => {
-	const response = await fetch(`http://localhost:3000/user/${userId}`);
+}:
 
-	const { data } = await response.json();
-	return data;
+	{
+	userId: number;
+	}): Promise<UserDataResponse> => {
+	try {
+		const response = await fetch(`http://localhost:3000/user/${userId}`);
+		if (!response.ok) {
+			throw new Error(`Erreurdu réseau: ${response.status}`);
+		}
+			
+		const { data } = await response.json();
+	
+		return data;
+	} catch (error) {
+		console.error(
+			"Erreur lors de la récupération des données utili",
+			error
+		);
+		throw error;
+	}
+	
 };
+
