@@ -17,7 +17,7 @@ const TopHeader: React.FC<TopHeaderProps> = () => {
 					<img className="runner" src={logo} alt="" />
 					<img className="logo-title" src={logoText} alt="" />
 				</div>
-				<h1>hello</h1>
+				
 					<ul>
 						<Link to="/"> Accueil</Link>
 						<Link to="#"> Profil</Link>
