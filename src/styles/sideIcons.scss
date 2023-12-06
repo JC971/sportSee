@@ -8,14 +8,13 @@
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
-	align-content: stretch;
-    padding-top: 60px;
+	padding-top: 60px;
+	position: fixed;
+	top: 91px;
 	
 
-    .copyright{
-       text-align: center;
-       padding-top: 200px;
-    }
+	.copyright {
+		text-align: center;
+		padding-top: 200px;
+	}
 }
-
-

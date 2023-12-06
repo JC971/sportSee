@@ -7,7 +7,7 @@ import copyright from "../../assets/copyright.png"
 
 const SideIcons = () => {
 	return (
-		<div>
+		
 			<div className="sideIconsContainer">
                 <div className="sideIcons-icons">
                     <div className="yoga">
@@ -27,7 +27,7 @@ const SideIcons = () => {
                     </div>
                 </div>
 			</div>
-		</div>
+		
 	);
 };
 

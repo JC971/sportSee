@@ -1,24 +1,17 @@
 .welcome-container {
-border: solid red 5px;
-display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: stretch;
-	align-content: stretch;
-	
+	display: flex;
+	flex-direction: column;
 }
-
-
-	
-
-
-
 h1 {
-	color: red;
-	grid-column: 3/6;
-
+	font-size: 48px;
+	margin: 0;
+	margin-left: 200px;
+	color: #ff0101;
 	span {
 		color: #000;
 	}
+}
+
+.tagline {
+	margin-left: 200px;
 }

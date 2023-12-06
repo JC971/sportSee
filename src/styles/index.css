@@ -7,14 +7,14 @@
 	padding: 0;
 	margin-right: auto;
 	margin-left: auto;
-	border: solid blue 4px;
+	
 }
 
 body {
 	margin: 0;
 	place-items: center;
 	box-sizing: border-box;
-	border: solid yellow 4px;
+	
 }
 
 

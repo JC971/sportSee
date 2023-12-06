@@ -1,4 +1,3 @@
-
 export type UserDataResponse = {
 	id: number;
 	userInfos: {
@@ -17,33 +16,24 @@ export type UserDataResponse = {
 
 // userId === 12 ou 18
 export const getUserData = async ({
-	userId,
-}:
-
-	{
+	userId
+}: {  
 	userId: number;
-	}): Promise<UserDataResponse> => {
+}): Promise<UserDataResponse> => {
 	try {
 		const response = await fetch(`http://localhost:3000/user/${userId}`);
 		if (!response.ok) {
 			throw new Error(`Erreurdu réseau: ${response.status}`);
 		}
-			
+
 		const { data } = await response.json();
-	
+
 		return data;
 	} catch (error) {
-		console.error(
-			"Erreur lors de la récupération des données utili",
-			error
-		);
+		console.error("Erreur lors de la récupération des données utili", error);
 		throw error;
 	}
-	
 };
-
-
-
 
 export const getUserDataInMemory = (): UserDataResponse => {
 	return {

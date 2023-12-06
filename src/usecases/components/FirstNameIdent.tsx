@@ -37,35 +37,29 @@ const LastNameIdent: React.FC<LastNameIdentProps> = ({ userId }) => {
 console.log('tototooeri')
 export default LastNameIdent;
 */
-import React, { useState, useEffect } from "react";
-import { UserDataResponse } from "../get-user-data";
-import "../../styles/firstName.scss"
+
+
+import React from "react";
+import "../../styles/firstName.scss";
 
 interface FirstNameIdentProps {
-	userId: number;
-	userData: UserDataResponse | null;
+	firstName: string;
+	
 }
 
-const FirstNameIdent: React.FC<FirstNameIdentProps> = ({ userData }) => {
-	const [firstName, setFirstName] = useState("");
-
-	useEffect(() => {
-		if (userData) {
-			setFirstName(userData.userInfos.firstName);
-		} else {
-			//setFirstName("")
-			console.error("Aucune donnée utilisateur fournie");
-		}
-	}, [userData]);
-
+const FirstNameIdent: React.FC<FirstNameIdentProps> = ({ firstName }) => {
+	
 	return (
-		<div>
+		
 			<div className="welcome-container">
 				<h1>
-					<span > Bonjour </span> {firstName}
+					<span> Bonjour </span> {firstName}
 				</h1>
+				<div className="tagline">
+					Félicitation ! Vous avez explosé vos objectifs hier 👏
+				</div>
 			</div>
-		</div>
+		
 	);
 };
 
