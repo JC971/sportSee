@@ -8,10 +8,11 @@ const ChartActivities = () => {
 	return (
 		<div>
 			<div className="main-chart">
-				<div className="chart-welcome">
-					<ActivityChart/>
-				</div>
 				<div className="daily-activity">
+					<ActivityChart />
+				</div>
+				<div className="average-duration">
+					
 				</div>
 				<div className="calories-container">
 					<div className="calories-box">

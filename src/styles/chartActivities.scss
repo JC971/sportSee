@@ -3,22 +3,18 @@
 	height: 750px;
 	display: grid;
 	grid-template-columns: 200px repeat(10, 1fr) 260px;
-	grid-template-rows: 100px repeat(7, 100px);
+	grid-template-rows: 50px repeat(7, 120px);
 	
 
-	.chart-welcome {
+	.daily-activity {
 		background-color: #fbfbfb;
 		grid-area: 2/2/7/11;
-		
+		height: 320px;
 	}
 
 	.calories-container {
 		grid-area:2/12/7/12 ;
-		
 	}
-
-	
-
 
 	.energy-display {
 		display: flex;
@@ -44,6 +40,13 @@
 		display: block;
 		font-size: 14px;
 		font-weight: 500;
+	}
+
+	.average-duration{
+		width: 258px;
+		height: 265px;
+		border: solid blue 2px;
+		grid-area: 5/2;
 	}
 
 }
