@@ -11,7 +11,7 @@ const ProteinesEnergy = () => {
 		<div className="energy-display">
 			<img src={proteines} alt="Proteines Icon" />
 			<p>
-				{proteinCount} kcal
+				{proteinCount} g
 				<span>Proteines</span>
 			</p>
 		</div>

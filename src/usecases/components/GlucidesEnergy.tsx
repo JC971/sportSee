@@ -9,8 +9,8 @@ const GlucidesEnergy = () => {
 		<div className="energy-display">
 			<img src={glucides} alt="Proteines Icon" />
 			<p>
-				{carbohydrateCount} kcal
-				<span>Proteines</span>
+				{carbohydrateCount} g
+				<span>Glucides</span>
 			</p>
 		</div>
 	);
