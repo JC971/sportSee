@@ -4,6 +4,7 @@ import GlucidesEnergy from "./GlucidesEnergy.tsx";
 import LipidesEnergy from "./LipidesEnergy.tsx";
 import ProteinesEnergy from "./ProteinesEnergy.tsx";
 import ActivityChart from "./ActivityChart.tsx";
+import LineChartObjective from "./lineChartObjective.tsx";
 const ChartActivities = () => {
 	return (
 		<div>
@@ -12,7 +13,7 @@ const ChartActivities = () => {
 					<ActivityChart />
 				</div>
 				<div className="average-duration">
-					
+					<LineChartObjective/>
 				</div>
 				<div className="calories-container">
 					<div className="calories-box">

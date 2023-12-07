@@ -2,7 +2,7 @@
 	width: 100%;
 	height: 750px;
 	display: grid;
-	grid-template-columns: 200px repeat(10, 1fr) 260px;
+	grid-template-columns: 150px repeat(10, 1fr) 260px;
 	grid-template-rows: 50px repeat(7, 120px);
 	
 
@@ -43,10 +43,14 @@
 	}
 
 	.average-duration{
-		width: 258px;
-		height: 265px;
-		border: solid blue 2px;
-		grid-area: 5/2;
+	
+		grid-area: 5/2/7/5;
+		box-shadow: 0px 2px 4px 0px #00000005;
+
+		grid-column-start: 2;
+		
+		background-color: #FF0000;
+		
 	}
 
 }

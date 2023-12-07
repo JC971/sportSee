@@ -134,7 +134,7 @@ export const USER_AVERAGE_SESSIONS = [
                 sessionLength: 45
             },
             {
-                day: 4,
+                  day: 4,
                 sessionLength: 50
             },
             {
@@ -150,6 +150,8 @@ export const USER_AVERAGE_SESSIONS = [
                 sessionLength: 60
             }
         ]
+              
+              
     },
     {
         userId: 18,
