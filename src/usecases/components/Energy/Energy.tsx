@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 type EnergyProps = {
 	count: number;
 	title: string;
-	icon?: ReactNode; // TODO enlever le "?" quand il y aura les icons
+	icon: ReactNode; 
 };
 
 export const Energy = ({ count, title, icon }: EnergyProps) => {
