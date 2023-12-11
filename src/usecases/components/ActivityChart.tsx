@@ -1,4 +1,4 @@
-import  { PureComponent } from "react";
+import { useState, useEffect } from "react";
 import {
 	BarChart,
 	Bar,
@@ -10,56 +10,50 @@ import {
 	Legend,
 	ResponsiveContainer,
 } from "recharts";
+import { ContentType } from "recharts/types/component/DefaultLegendContent";
+import { getUserActivityInMemory } from "../get-user-activity";
+import type { Session } from "../get-user-activity";
+import "../../styles/activityChart.scss";
 
+type ActivitiyChartProps = {
+	userId: number;
+};
 
-const data = [
-	{
-              day: '2020-07-01',
-                kilogram: 80,
-                calories: 240
-            },
-            {
-                day: '2020-07-02',
-                kilogram: 80,
-                calories: 220
-            },
-            {
-                day: '2020-07-03',
-                kilogram: 81,
-                calories: 280
-            },
-            {
-                day: '2020-07-04',
-                kilogram: 81,
-                calories: 290
-            },
-            {
-                day: '2020-07-05',
-                kilogram: 80,
-                calories: 160
-            },
-            {
-                day: '2020-07-06',
-                kilogram: 78,
-                calories: 162
-            },
-            {
-                day: '2020-07-07',
-                kilogram: 76,
-                calories: 390
-            }
-        ]
-  
+type renderLegendProps = {
+	payload: [
+		{
+			value: string;
+		}
+	];
+};
+const renderLegend = ({ payload }: renderLegendProps): ContentType => {
+	return (
+		<ul>
+			{payload.map((entry: { value: string }, index: number) => (
+				<li key={`item-${index}`}>{entry.value} Plop</li>
+			))}
+		</ul>
+	);
+};
 
+export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
+	const [activities, setActivities] = useState<Session[]>([]);
 
-export default class ActivityChart extends PureComponent {
-	render() {
-		return (
+	useEffect(() => {
+		const data = getUserActivityInMemory();
+
+		setActivities(data.sessions);
+	}, []);
+
+	if (activities.length === 0) return null;
+
+	return (
+		<div className="daily-activity">
 			<ResponsiveContainer width="100%" height="100%">
 				<BarChart
 					width={500}
 					height={300}
-					data={data}
+					data={activities}
 					margin={{
 						top: 5,
 						right: 30,
@@ -68,12 +62,19 @@ export default class ActivityChart extends PureComponent {
 					}}
 				>
 					<CartesianGrid strokeDasharray="3 3" />
-					<XAxis dataKey="day" />
+					<XAxis dataKey="day" tickFormatter={(value, index) => index + 1} />
 					<YAxis />
 					<Tooltip />
-					<Legend />
+					<Legend
+						verticalAlign="top"
+						align="right"
+						layout="horizontal"
+						margin={{ right: 20, top: 20 }}
+					/>
+
 					<Bar
 						dataKey="kilogram"
+						name="poids (kg)"
 						fill="#282D30"
 						activeBar={<Rectangle fill="grey" stroke="#" />}
 						radius={[3, 3, 0, 0]}
@@ -81,6 +82,7 @@ export default class ActivityChart extends PureComponent {
 					/>
 					<Bar
 						dataKey="calories"
+						name="calories brûlées (kCall)"
 						fill="#E60000"
 						activeBar={<Rectangle fill="red" stroke="#FFF" />}
 						radius={[3, 3, 0, 0]}
@@ -88,8 +90,6 @@ export default class ActivityChart extends PureComponent {
 					/>
 				</BarChart>
 			</ResponsiveContainer>
-		);
-	}
-}
-
-
+		</div>
+	);
+};

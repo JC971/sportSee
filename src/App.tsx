@@ -7,7 +7,6 @@ import SideIcons from "./usecases/components/SideIcons";
 import FirstNameIdent from "./usecases/components/FirstNameIdent";
 import ChartActivities from "./usecases/components/ChartActivities";
 import "./styles/firstName.scss";
-import RightBanner from "./usecases/components/RightBanner";
 
 //const USER = 12;
 
@@ -34,8 +33,9 @@ function App() {
 			<SideIcons />
 			<main>
 				<FirstNameIdent firstName={user.userInfos.firstName} />
-				<ChartActivities />
-				<RightBanner/>
+				<div className="main-chart">
+					<ChartActivities user={user} />
+				</div>
 			</main>
 		</>
 	);

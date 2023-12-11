@@ -1,12 +1,7 @@
 import logo from "../../assets/logo.svg";
 import logoText from "../../assets/logoText.svg";
 import "../../styles/topHeader.css";
-//import React from 'react';
-//import type { UserDataResponse } from "../get-user-data";
-/*
-interface TopHeaderProps {
-	user: UserDataResponse | null;
-}*/
+
 
 const TopHeader = () => {
 	return (

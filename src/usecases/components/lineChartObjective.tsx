@@ -44,7 +44,10 @@ export default class LineChartObjective extends PureComponent {
 
 	render() {
 		return (
-			<div style={{ width: "255px", height: "263px" }}>
+			<div
+				style={{ width: "255px", height: "263px" }}
+				className="average-duration"
+			>
 				<ResponsiveContainer width="100%" height="100%">
 					<LineChart
 						width={500}
@@ -60,12 +63,11 @@ export default class LineChartObjective extends PureComponent {
 						<XAxis
 							dataKey="day"
 							axisLine={false}
-							
 							tick={{
 								fill: "#FFFFFF",
 								style: {
-									transform: 'translate( 15px)'
-								}
+									transform: "translate( 15px)",
+								},
 							}}
 							tickFormatter={(day) => {
 								const daysAbr = ["L", "M", "M", "J", "V", "S", "D"];

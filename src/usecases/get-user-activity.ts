@@ -1,10 +1,12 @@
+export type Session = {
+	day: string;
+	kilogram: number;
+	calories: number;
+};
+
 export type UserActivityResponse = {
 	userId: number;
-	sessions: Array<{
-		day: string;
-		kilogram: number;
-		calories: number;
-	}>;
+	sessions: Session[];
 };
 export const getUserActivity = async ({
 	userId,
@@ -12,12 +14,14 @@ export const getUserActivity = async ({
 	userId: number;
 }): Promise<UserActivityResponse> => {
 	try {
-		const response = await fetch(`http://localhost:3000/user/${userId}/activity`);
+		const response = await fetch(
+			`http://localhost:3000/user/${userId}/activity`
+		);
 		if (!response.ok) {
 			throw new Error(`Erreur du réseau: ${response.status}`);
 		}
 
-		const  data : UserActivityResponse = await response.json();
+		const data: UserActivityResponse = await response.json();
 
 		return data;
 	} catch (error) {
@@ -70,4 +74,4 @@ export const getUserActivityInMemory = (): UserActivityResponse => {
 			},
 		],
 	};
-}
+};

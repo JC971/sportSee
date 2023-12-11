@@ -1,3 +1,10 @@
+export type KeyData = {
+	calorieCount: number;
+	proteinCount: number;
+	carbohydrateCount: number;
+	lipidCount: number;
+};
+
 export type UserDataResponse = {
 	id: number;
 	userInfos: {
@@ -6,18 +13,13 @@ export type UserDataResponse = {
 		age: number;
 	};
 	todayScore: number;
-	keyData: {
-		calorieCount: number;
-		proteinCount: number;
-		carbohydrateCount: number;
-		lipidCount: number;
-	};
+	keyData: KeyData;
 };
 
 // userId === 12 ou 18
 export const getUserData = async ({
-	userId
-}: {  
+	userId,
+}: {
 	userId: number;
 }): Promise<UserDataResponse> => {
 	try {

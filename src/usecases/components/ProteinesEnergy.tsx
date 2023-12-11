@@ -1,5 +1,6 @@
+/*
 import { getUserDataInMemory } from "../get-user-data";
-import proteines from "../../assets/protein-icon.png"
+import ProteinIcon from '../../assets/ProteinIcon.svg';
 
 
 
@@ -9,9 +10,9 @@ const ProteinesEnergy = () => {
 
 	return (
 		<div className="energy-display">
-			<img src={proteines} alt="Proteines Icon" />
+			<img src={ProteinIcon} alt="Proteines Icon" />
 			<p>
-				{proteinCount} g
+				{proteinCount} 
 				<span>Proteines</span>
 			</p>
 		</div>
@@ -19,3 +20,4 @@ const ProteinesEnergy = () => {
 };
 
 export default ProteinesEnergy;
+*/
