@@ -23,14 +23,38 @@ type renderLegendProps = {
 	payload: [
 		{
 			value: string;
+			color: string
+
 		}
 	];
 };
 const renderLegend = ({ payload }: renderLegendProps): ContentType => {
 	return (
-		<ul>
-			{payload.map((entry: { value: string }, index: number) => (
-				<li key={`item-${index}`}>{entry.value} Plop</li>
+		<ul
+			style={{
+				listStyleType: "none",
+				textAlign: "right",
+				display: "flex",
+				justifyContent: "flex-end",
+			}}
+		>
+			{payload.map((entry, index) => (
+				<li
+					key={`item-${index}`}
+					style={{
+						display: "flex",
+						alignItems: "center",
+						marginBottom: "4px",
+						paddingRight: "20px",
+						color: "#74798C",
+						fontSize:14
+					}}
+				>
+					<svg height="10" width="10" style={{ marginRight: 10 }}>
+						<circle cx="5" cy="5" r="5" fill={entry.color} />
+					</svg>
+					{entry.value}
+				</li>
 			))}
 		</ul>
 	);
@@ -49,7 +73,7 @@ export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 
 	return (
 		<div className="daily-activity">
-			<ResponsiveContainer width="100%" height="100%">
+			<ResponsiveContainer width="100%" height="94%">
 				<BarChart
 					width={500}
 					height={300}
@@ -61,17 +85,33 @@ export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 						bottom: 5,
 					}}
 				>
-					<CartesianGrid strokeDasharray="3 3" />
-					<XAxis dataKey="day" tickFormatter={(value, index) => index + 1} />
-					<YAxis />
+					<CartesianGrid
+						strokeDasharray="3 3"
+						vertical={false}
+						horizontal={true}
+					/>
+					<XAxis
+						dataKey="day"
+						tickFormatter={(value, index) => `${index + 1}`}
+						tick={{ dy: 10 }} //espace entre l'axe et les étiquettes
+						fontSize={14}
+						
+					/>
+
+					<YAxis
+						axisLine={false}
+						tickLine={true}
+						tick={true}
+						tickCount={4}
+						orientation="right"
+					/>
 					<Tooltip />
 					<Legend
 						verticalAlign="top"
 						align="right"
-						layout="horizontal"
+						content={renderLegend}
 						margin={{ right: 20, top: 20 }}
 					/>
-
 					<Bar
 						dataKey="kilogram"
 						name="poids (kg)"
@@ -82,7 +122,7 @@ export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 					/>
 					<Bar
 						dataKey="calories"
-						name="calories brûlées (kCall)"
+						name=" calories brûlées (kCall)"
 						fill="#E60000"
 						activeBar={<Rectangle fill="red" stroke="#FFF" />}
 						radius={[3, 3, 0, 0]}

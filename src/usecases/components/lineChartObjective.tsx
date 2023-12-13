@@ -48,7 +48,7 @@ export default class LineChartObjective extends PureComponent {
 				style={{ width: "255px", height: "263px" }}
 				className="average-duration"
 			>
-				<ResponsiveContainer width="100%" height="100%">
+				<ResponsiveContainer width="100%" height="98%">
 					<LineChart
 						width={500}
 						height={300}
@@ -56,7 +56,7 @@ export default class LineChartObjective extends PureComponent {
 						margin={{
 							top: 5,
 							right: 30,
-							left: -50,
+							left: -60,
 							bottom: 20,
 						}}
 					>

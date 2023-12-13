@@ -3,8 +3,7 @@
 	display: grid;
 	grid-template-columns: 70% 258px;
 	grid-template-rows: repeat(2, 400px);
-	column-gap: 60px;
-	
+	column-gap: 70px;
 
 	.daily-activity {
 		background-color: #fbfbfb;
@@ -27,21 +26,28 @@
 	.average-duration {
 		box-shadow: 0px 2px 4px 0px #00000005;
 		background-color: #ff0000;
-	
 		
 	}
 
-	.performances {
+	.performances,
+	.score-chart,
+	.average-duration {
 		height: 263px;
-	background-color: yellow;
-		
+		border-radius: 5px;
+		height: 263px;
 		width: 263px;
 	}
 
-	.score-chart {
-		background-color: yellow;
-	height: 263px;
-	width: 263px;
-	border: solid 1px black;
+	.performances{
+	background-color: #282D30;
+	}
+
+	
+
+	.charts {
+		display: flex;
+		gap: 25px;
+		justify-content: space-between;
+		margin-top: 50px;
 	}
 }

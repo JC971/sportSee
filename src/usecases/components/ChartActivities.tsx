@@ -16,9 +16,11 @@ const ChartActivities = ({ user }: ChartActivitiesProps) => {
 		<>
 			<div>
 				<ActivityChart userId={user.id} />
-				<LineChartObjective />
-				<PerformanceRadarChart />
-				<ScoreChart />
+				<div className="charts">
+					<LineChartObjective />
+					<PerformanceRadarChart />
+					<ScoreChart />
+				</div>
 			</div>
 			<CaloriesBox keyData={user.keyData} />
 		</>
