@@ -1,4 +1,4 @@
-import { PureComponent } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	LineChart,
 	Line,
@@ -8,87 +8,99 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 
-const data = [
-	{
-		day: 1,
-		sessionLength: 30,
-	},
-	{
-		day: 2,
-		sessionLength: 23,
-	},
-	{
-		day: 3,
-		sessionLength: 45,
-	},
-	{
-		day: 4,
-		sessionLength: 50,
-	},
-	{
-		day: 5,
-		sessionLength: 0,
-	},
-	{
-		day: 6,
-		sessionLength: 0,
-	},
-	{
-		day: 7,
-		sessionLength: 60,
-	},
-];
+import { getUserAverageInMemory } from "../get-user-average-sesssions";
+import type { Session } from "../get-user-average-sesssions";
+import { ContentType } from "recharts/types/component/DefaultLegendContent";
 
-export default class LineChartObjective extends PureComponent {
-	static demoUrl = "https://codesandbox.io/s/simple-line-chart-kec3v";
+type LineChartObjectiveProps = {
+	userId: number;
+};
 
-	render() {
+type TooltipCustomProps = {
+	payload: [
+		{
+			value: string;
+			color: string;
+		}
+	];
+	active: boolean;
+	label: string;
+};
+
+const TooltipCustom = ({ payload, active, label }: TooltipCustomProps): ContentType |null => {
+	if (active && payload && payload.length) {
 		return (
-			<div
-				style={{ width: "255px", height: "263px" }}
-				className="average-duration"
-			>
-				<ResponsiveContainer width="100%" height="98%">
-					<LineChart
-						width={500}
-						height={300}
-						data={data}
-						margin={{
-							top: 5,
-							right: 30,
-							left: -60,
-							bottom: 20,
-						}}
-					>
-						<XAxis
-							dataKey="day"
-							axisLine={false}
-							tick={{
-								fill: "#FFFFFF",
-								style: {
-									transform: "translate( 15px)",
-								},
-							}}
-							tickFormatter={(day) => {
-								const daysAbr = ["L", "M", "M", "J", "V", "S", "D"];
-								return daysAbr[day - 1];
-							}}
-						/>
-						<YAxis axisLine={false} tick={false} />
-						<Tooltip />
-
-						<Line
-							type="monotone"
-							dataKey="sessionLength"
-							stroke="#fff"
-							strokeWidth={2}
-							dot={false}
-							activeDot={{ r: 8 }}
-						/>
-						<Line type="monotone" dataKey="" stroke="#82ca9d" />
-					</LineChart>
-				</ResponsiveContainer>
-			</div>
+			<div className="custom-tooltip">
+				<p className="label">{`${label} : ${payload[0].value}`}</p>
+				<p className="desc">Anything you want can be displayed here.</p>
+			</div>//customiser
 		);
 	}
-}
+
+	return null;
+};
+
+export const LineChartObjective = ({ userId }: LineChartObjectiveProps) => {
+	const [average, setAverage] = useState<Session[]>([]);
+
+	useEffect(() => {
+		const data = getUserAverageInMemory();
+		setAverage(data.sessions);
+	}, []);
+
+	if (average.length === 0) return null;
+
+	return (
+		<div
+			style={{ width: "255px", height: "263px", position:'relative' }}
+			
+			className="average-duration"
+		>
+			<div style={{ position: 'absolute', top: '10px', left: '20px', fontSize: '14px', color:'white', zIndex:'1000' }} >
+				Durée moyenne des sessions
+			</div>
+			<ResponsiveContainer width="100%" height="98%">
+				<LineChart
+					width={500}
+					height={300}
+					data={average}
+					margin={{
+						top: 5,
+						right: 30,
+						left: -60,
+						bottom: 20,
+					}}
+				>
+					<XAxis
+						dataKey="day"
+						axisLine={false}
+						tick={{
+							fill: "#FFFFFF",
+							opacity: "0.5",
+							style: {
+								transform: "translate( 15px)",
+							},
+						}}
+						tickFormatter={(day) => {
+							const daysAbr = ["L", "M", "M", "J", "V", "S", "D"];
+							return daysAbr[day - 1];
+						}}
+					/>
+					<YAxis axisLine={false} tick={false} />
+					<Tooltip content={TooltipCustom} />
+					
+
+					<Line
+						type="monotone"
+						dataKey="sessionLength"
+						stroke="#fff"
+						strokeWidth={2}
+						dot={false}
+						activeDot={{ r: 8 }}
+					/>
+					<Line type="monotone" dataKey="" stroke="#82ca9d" />
+				</LineChart>
+			</ResponsiveContainer>
+		</div>
+	);
+};

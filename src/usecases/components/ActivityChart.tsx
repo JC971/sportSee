@@ -65,7 +65,6 @@ export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 
 	useEffect(() => {
 		const data = getUserActivityInMemory();
-
 		setActivities(data.sessions);
 	}, []);
 

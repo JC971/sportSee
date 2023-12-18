@@ -1,7 +1,7 @@
 import "../../styles/chartActivities.scss";
 
 import { ActivityChart } from "./ActivityChart.tsx";
-import LineChartObjective from "./lineChartObjective.tsx";
+import { LineChartObjective } from "./lineChartObjective.tsx";
 import PerformanceRadarChart from "./PerformanceRadarChart.tsx";
 import ScoreChart from "./ScoreChart.tsx";
 import { CaloriesBox } from "./CaloriesBox.tsx";
@@ -17,7 +17,7 @@ const ChartActivities = ({ user }: ChartActivitiesProps) => {
 			<div>
 				<ActivityChart userId={user.id} />
 				<div className="charts">
-					<LineChartObjective />
+					<LineChartObjective userId={user.id} />
 					<PerformanceRadarChart />
 					<ScoreChart />
 				</div>
