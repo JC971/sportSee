@@ -10,10 +10,11 @@ import {
 	Legend,
 	ResponsiveContainer,
 } from "recharts";
+import { TooltipProps, Payload } from "recharts";
 import { ContentType } from "recharts/types/component/DefaultLegendContent";
 import { getUserActivityInMemory } from "../get-user-activity";
 import type { Session } from "../get-user-activity";
-import "../../styles/activityChart.scss";
+import './activityChart.scss';
 
 type ActivitiyChartProps = {
 	userId: number;
@@ -60,6 +61,53 @@ const renderLegend = ({ payload }: renderLegendProps): ContentType => {
 	);
 };
 
+type CustomTooltipProps = TooltipProps<number, string>;
+
+const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+	if (active && payload && payload.length) {
+		return (
+			<div className="custom-tooltip">
+				{payload.map((entry, index) => {
+					
+					let modifiedName;
+					let nameStyle = {};
+
+					const trimmedName = entry.name ? entry.name.trim() : "";
+
+					if (trimmedName === "poids (kg)") {
+						modifiedName = "Kg";
+						nameStyle = {
+							fontWeight: "bold",
+							color: "#FFFFFF",
+							fontSize: "7px",
+							
+						};
+					} else if (trimmedName === "calories brûlées (kCall)") {
+						modifiedName = "KCall";
+						nameStyle = {
+							color: '#FFFFFF',
+							fontSize: '7px',
+							fontWeight:'bold'
+						}
+					} else {
+						modifiedName = entry.name; 
+					}
+
+					return (
+						<div className="tool-style" key={index} style={{ color: entry.color }}>
+						<span style={nameStyle}>{`${entry.value}: ${modifiedName}`}</span>
+						</div>
+					);
+				})}
+			</div>
+		);
+	}
+	return null;
+};
+
+
+
+
 export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 	const [activities, setActivities] = useState<Session[]>([]);
 
@@ -94,7 +142,6 @@ export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 						tickFormatter={(value, index) => `${index + 1}`}
 						tick={{ dy: 10 }} //espace entre l'axe et les étiquettes
 						fontSize={14}
-						
 					/>
 
 					<YAxis
@@ -104,7 +151,7 @@ export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 						tickCount={4}
 						orientation="right"
 					/>
-					<Tooltip />
+					<Tooltip content={<CustomTooltip />} />
 					<Legend
 						verticalAlign="top"
 						align="right"
@@ -132,3 +179,4 @@ export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 		</div>
 	);
 };
+

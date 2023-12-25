@@ -7,7 +7,7 @@ import {
 	Tooltip,
 	ResponsiveContainer,
 } from "recharts";
-
+import './lineChart.scss'
 import { getUserAverageInMemory } from "../get-user-average-sesssions";
 import type { Session } from "../get-user-average-sesssions";
 import { ContentType } from "recharts/types/component/DefaultLegendContent";
@@ -21,19 +21,28 @@ type TooltipCustomProps = {
 		{
 			value: string;
 			color: string;
+			
 		}
 	];
 	active: boolean;
-	label: string;
+	label: string | number;
+	
 };
 
-const TooltipCustom = ({ payload, active, label }: TooltipCustomProps): ContentType |null => {
+const TooltipCustom = ({
+	payload,
+	active,
+	label,
+	
+	
+}: TooltipCustomProps): ContentType | null => {
 	if (active && payload && payload.length) {
 		return (
-			<div className="custom-tooltip">
-				<p className="label">{`${label} : ${payload[0].value}`}</p>
-				<p className="desc">Anything you want can be displayed here.</p>
-			</div>//customiser
+			<div className="custom-tooltip" style={{fontSize: '8px',color:'white'}}>
+				{/*<p className="label">{`${label} : ${payload[0].value}`}</p>
+				<p className="desc"> min.</p>*/}
+				<p className="label"style={{backgroundColor:'white', color:'black'}} >{`${payload[0].value} min.`}</p>
+			</div> //customiser
 		);
 	}
 
@@ -52,14 +61,23 @@ export const LineChartObjective = ({ userId }: LineChartObjectiveProps) => {
 
 	return (
 		<div
-			style={{ width: "255px", height: "263px", position:'relative' }}
-			
+			style={{ width: "258px", height: "263px", position: "relative" }}
 			className="average-duration"
 		>
-			<div style={{ position: 'absolute', top: '10px', left: '20px', fontSize: '14px', color:'white', zIndex:'1000' }} >
+			<div
+				className="average-text"
+				style={{
+					position: "absolute",
+					top: "10px",
+					left: "20px",
+					fontSize: "15px",
+					color: "white",
+					width:'180px'
+				}}
+			>
 				Durée moyenne des sessions
 			</div>
-			<ResponsiveContainer width="100%" height="98%">
+			<ResponsiveContainer width="100%" height="100%">
 				<LineChart
 					width={500}
 					height={300}
@@ -82,13 +100,13 @@ export const LineChartObjective = ({ userId }: LineChartObjectiveProps) => {
 							},
 						}}
 						tickFormatter={(day) => {
+							
 							const daysAbr = ["L", "M", "M", "J", "V", "S", "D"];
-							return daysAbr[day - 1];
+							return daysAbr[day -1];
 						}}
 					/>
 					<YAxis axisLine={false} tick={false} />
 					<Tooltip content={TooltipCustom} />
-					
 
 					<Line
 						type="monotone"
