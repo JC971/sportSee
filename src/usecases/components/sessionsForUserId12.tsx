@@ -6,5 +6,5 @@ export const sessionsForUserId12 = user
 			day: session.day,
 			kilogram: session.kilogram,
 			calories: session.calories,
-	  }))
+	}))
 	: [];

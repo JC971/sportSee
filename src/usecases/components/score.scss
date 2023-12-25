@@ -1,0 +1,19 @@
+.score-chart {
+	position: relative;
+    
+
+	.score {
+		font-size: 15px;
+		color: #20253a;
+		position: absolute;
+		top: 20px;
+		left: 20px;
+	}
+
+	.objectif{
+		display: block;
+		width: 60px;
+		font-size: 16px;
+		color: #74798C;
+	}
+}
