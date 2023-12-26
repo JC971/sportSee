@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
 	LineChart,
 	Line,
@@ -84,20 +84,19 @@ export const LineChartObjective = ({ userId }: LineChartObjectiveProps) => {
 					data={average}
 					margin={{
 						top: 5,
-						right: 30,
-						left: -60,
+						right: 20,
+						left: -40,
 						bottom: 20,
 					}}
 				>
 					<XAxis
 						dataKey="day"
+						tickLine={false}
 						axisLine={false}
 						tick={{
 							fill: "#FFFFFF",
 							opacity: "0.5",
-							style: {
-								transform: "translate( 15px)",
-							},
+							
 						}}
 						tickFormatter={(day) => {
 							

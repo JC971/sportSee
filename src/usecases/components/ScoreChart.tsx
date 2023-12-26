@@ -79,7 +79,7 @@ export default class ScoreChart extends PureComponent {
 }
 */
 
-import React, { PureComponent } from "react";
+import { PureComponent } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { getUserDataInMemory } from "../get-user-data";
 import "./score.scss";
