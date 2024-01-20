@@ -10,7 +10,7 @@ import {
 	Legend,
 	ResponsiveContainer,
 } from "recharts";
-import { TooltipProps, Payload } from "recharts";
+import { TooltipProps} from "recharts";
 import { ContentType } from "recharts/types/component/DefaultLegendContent";
 import { getUserActivityInMemory } from "../get-user-activity";
 import type { Session } from "../get-user-activity";
@@ -48,6 +48,7 @@ const renderLegend = ({ payload }: renderLegendProps): ContentType => {
 						marginBottom: "4px",
 						paddingRight: "20px",
 						color: "#74798C",
+						
 						fontSize:14
 					}}
 				>
@@ -61,47 +62,28 @@ const renderLegend = ({ payload }: renderLegendProps): ContentType => {
 	);
 };
 
+
 type CustomTooltipProps = TooltipProps<number, string>;
 
-const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+
+//1er
+
+const CustomTooltip = ({
+	active,
+	payload,
+}: {
+	active: boolean;
+	payload: { value: string }[];
+}) => {
 	if (active && payload && payload.length) {
 		return (
-			<div className="custom-tooltip">
-				{payload.map((entry, index) => {
-					
-					let modifiedName;
-					let nameStyle = {};
-
-					const trimmedName = entry.name ? entry.name.trim() : "";
-
-					if (trimmedName === "poids (kg)") {
-						modifiedName = "Kg";
-						nameStyle = {
-							fontWeight: "bold",
-							color: "#FFFFFF",
-							fontSize: "7px",
-							
-						};
-					} else if (trimmedName === "calories brûlées (kCall)") {
-						modifiedName = "KCall";
-						nameStyle = {
-							color: '#FFFFFF',
-							fontSize: '7px',
-							fontWeight:'bold'
-						}
-					} else {
-						modifiedName = entry.name; 
-					}
-
-					return (
-						<div className="tool-style" key={index} style={{ color: entry.color }}>
-						<span style={nameStyle}>{`${entry.value}: ${modifiedName}`}</span>
-						</div>
-					);
-				})}
+			<div className="custom__tooltip">
+				<p className="custom__tooltip__label">{`${payload[1].value}kg`}</p>
+				<p className="custom__tooltip__intro">{`${payload[0].value}Kcal`}</p>
 			</div>
 		);
 	}
+
 	return null;
 };
 
@@ -120,6 +102,7 @@ export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 
 	return (
 		<div className="daily-activity">
+			<span className="activity-title">Activité quotidienne</span>
 			<ResponsiveContainer width="100%" height="94%">
 				<BarChart
 					width={500}
@@ -140,16 +123,18 @@ export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 					<XAxis
 						dataKey="day"
 						tickFormatter={(value, index) => `${index + 1}`}
-						tick={{ dy: 10 }} //espace entre l'axe et les étiquettes
+						tick={{ dy: 10 }} //pour mettre de l'espace entre l'axe et les étiquettes
 						fontSize={14}
 					/>
 
 					<YAxis
-						axisLine={false}
-						tickLine={true}
-						tick={true}
+						dataKey="calories"
 						tickCount={4}
 						orientation="right"
+						axisLine={false}
+						tickLine={false}
+						style={{ fontSize: "14px" }}
+						stroke="#9B9EAC"
 					/>
 					<Tooltip content={<CustomTooltip />} />
 					<Legend
@@ -180,3 +165,30 @@ export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 	);
 };
 
+
+//////
+
+
+
+
+/*
+
+const CustomTooltip = ({
+	active,
+	payload,
+}: {
+	active: boolean;
+	payload: { value: string }[];
+}) => {
+	if (active && payload && payload.length) {
+		return (
+			<div className="custom__tooltip">
+				<p className="custom__tooltip__label">{`${payload[1].value}kg`}</p>
+				<p className="custom__tooltip__intro">{`${payload[0].value}Kcal`}</p>
+			</div>
+		);
+	}
+
+	return null;
+};
+*/

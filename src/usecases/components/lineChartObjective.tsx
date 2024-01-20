@@ -29,24 +29,40 @@ type TooltipCustomProps = {
 	
 };
 
+
+
 const TooltipCustom = ({
 	payload,
 	active,
-	label,
+	
 	
 	
 }: TooltipCustomProps): ContentType | null => {
 	if (active && payload && payload.length) {
 		return (
-			<div className="custom-tooltip" style={{fontSize: '8px',color:'white'}}>
-				{/*<p className="label">{`${label} : ${payload[0].value}`}</p>
-				<p className="desc"> min.</p>*/}
-				<p className="label"style={{backgroundColor:'white', color:'black'}} >{`${payload[0].value} min.`}</p>
+			<div className="custom-tooltip">
+			{/* 	<p className="label">{`${label} : ${payload[0].value}`}</p>
+				<p className="desc"> min.</p>*/ }
+				<p className="label" >{`${payload[0].value} min.`}</p>
 			</div> //customiser
 		);
 	}
 
 	return null;
+};
+
+const CustomHover = (props: any) => {
+	const points = props.points;
+
+	return (
+		<rect
+			x={points[0].x}
+			y="5"
+			width="100%"
+			height="100%"
+			fill="rgba(0, 0, 0, 0.1)"
+		/>
+	);
 };
 
 export const LineChartObjective = ({ userId }: LineChartObjectiveProps) => {
@@ -61,21 +77,12 @@ export const LineChartObjective = ({ userId }: LineChartObjectiveProps) => {
 
 	return (
 		<div
-			style={{ width: "258px", height: "263px", position: "relative" }}
 			className="average-duration"
+			style={{ width: "258px", height: "263px", position: "relative" }}
 		>
-			<div
-				className="average-text"
-				style={{
-					position: "absolute",
-					top: "10px",
-					left: "20px",
-					fontSize: "15px",
-					color: "white",
-					width:'180px'
-				}}
-			>
-				Durée moyenne des sessions
+			<div className="average-text">
+				Durée moyenne des
+				<br /> sessions
 			</div>
 			<ResponsiveContainer width="100%" height="100%">
 				<LineChart
@@ -84,8 +91,8 @@ export const LineChartObjective = ({ userId }: LineChartObjectiveProps) => {
 					data={average}
 					margin={{
 						top: 5,
-						right: 20,
-						left: -40,
+						right: 1,
+						left: 15,
 						bottom: 20,
 					}}
 				>
@@ -93,31 +100,36 @@ export const LineChartObjective = ({ userId }: LineChartObjectiveProps) => {
 						dataKey="day"
 						tickLine={false}
 						axisLine={false}
-						tick={{
-							fill: "#FFFFFF",
-							opacity: "0.5",
-							
-						}}
+						tick={{ opacity: "0.5" }}
+						strokeOpacity={0.5}
+						stroke="#FFFFFF"
 						tickFormatter={(day) => {
-							
 							const daysAbr = ["L", "M", "M", "J", "V", "S", "D"];
-							return daysAbr[day -1];
+							return daysAbr[day - 1];
 						}}
 					/>
-					<YAxis axisLine={false} tick={false} />
-					<Tooltip content={TooltipCustom} />
+					<YAxis
+						hide
+						dataKey="sessionLength"
+						tickLine={false}
+						axisLine={false}
+						domain={["dataMin - 60", "dataMax +90"]}
+					/>
+
+					<Tooltip content={TooltipCustom} cursor={<CustomHover />} />
 
 					<Line
-						type="monotone"
+						type="natural"
 						dataKey="sessionLength"
-						stroke="#fff"
-						strokeWidth={2}
+						stroke="#FFFFFF"
+						strokeOpacity={0.5}
 						dot={false}
-						activeDot={{ r: 8 }}
+						activeDot={{ stroke: "rgba(255,255,255,0.2)", strokeWidth: 10 }}
 					/>
-					<Line type="monotone" dataKey="" stroke="#82ca9d" />
+					<Line/>
 				</LineChart>
 			</ResponsiveContainer>
 		</div>
 	);
 };
+
