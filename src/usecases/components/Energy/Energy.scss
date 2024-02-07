@@ -1,4 +1,5 @@
 .energy {
+	//right side
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -10,15 +11,15 @@
 	background: #fbfbfb;
 	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.02);
 	padding: 1rem;
-
 }
 
-.energy img{
+.energy img {
 	width: 60px;
 	height: 60px;
 }
-.energy p{
-	color: #282D30;
+
+.energy p {
+	color: #282d30;
 	font-size: 20px;
 	font-weight: 700;
 }

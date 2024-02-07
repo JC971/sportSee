@@ -63,11 +63,6 @@ const renderLegend = ({ payload }: renderLegendProps): ContentType => {
 };
 
 
-type CustomTooltipProps = TooltipProps<number, string>;
-
-
-//1er
-
 const CustomTooltip = ({
 	active,
 	payload,
@@ -86,7 +81,6 @@ const CustomTooltip = ({
 
 	return null;
 };
-
 
 
 

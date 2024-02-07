@@ -1,11 +1,10 @@
 import { Energy } from "./Energy/Energy.tsx";
 import { KeyData } from "../get-user-data.ts";
-import '../../assets/ProteinIcon.svg'
+import "../../assets/ProteinIcon.svg";
 import proteinIcon from "../../assets/protein-icon.svg";
 import CaloriesIcon from "../../assets/calories-icon.svg";
 import lipides from "../../assets/fat-icon.svg";
-import glucides from "../../assets/glucides-icon.png"
-
+import glucides from "../../assets/glucides-icon.png";
 
 type CaloriesBoxProps = {
 	keyData: KeyData;
@@ -42,6 +41,5 @@ export const CaloriesBox = ({ keyData }: CaloriesBoxProps) => {
 // TODO à déplacer dans un fichier dans le dossier Energy
 
 export const CalorieIcon = () => {
-    return <svg>{CaloriesIcon}</svg>;
- 
+	return <svg>{CaloriesIcon}</svg>;
 };
