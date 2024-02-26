@@ -10,11 +10,10 @@ import {
 	Legend,
 	ResponsiveContainer,
 } from "recharts";
-import { TooltipProps} from "recharts";
 import { ContentType } from "recharts/types/component/DefaultLegendContent";
-import { getUserActivityInMemory } from "../get-user-activity";
-import type { Session } from "../get-user-activity";
-import './activityChart.scss';
+import { getUserActivity } from "../usecases/get-user-activity";
+import "./activityChart.scss";
+import { Session } from "../model/user.interface";
 
 type ActivitiyChartProps = {
 	userId: number;
@@ -24,8 +23,7 @@ type renderLegendProps = {
 	payload: [
 		{
 			value: string;
-			color: string
-
+			color: string;
 		}
 	];
 };
@@ -48,8 +46,8 @@ const renderLegend = ({ payload }: renderLegendProps): ContentType => {
 						marginBottom: "4px",
 						paddingRight: "20px",
 						color: "#74798C",
-						
-						fontSize:14
+
+						fontSize: 14,
 					}}
 				>
 					<svg height="10" width="10" style={{ marginRight: 10 }}>
@@ -61,7 +59,6 @@ const renderLegend = ({ payload }: renderLegendProps): ContentType => {
 		</ul>
 	);
 };
-
 
 const CustomTooltip = ({
 	active,
@@ -82,15 +79,17 @@ const CustomTooltip = ({
 	return null;
 };
 
-
-
 export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 	const [activities, setActivities] = useState<Session[]>([]);
 
 	useEffect(() => {
-		const data = getUserActivityInMemory();
-		setActivities(data.sessions);
-	}, []);
+		const fetchUser = async () => {
+			const data = await getUserActivity({ userId });
+			setActivities(data.sessions);
+		};
+
+		fetchUser();
+	}, [userId]);
 
 	if (activities.length === 0) return null;
 
@@ -120,7 +119,6 @@ export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 						tick={{ dy: 10 }} //pour mettre de l'espace entre l'axe et les étiquettes
 						fontSize={14}
 					/>
-
 					<YAxis
 						dataKey="calories"
 						tickCount={4}
@@ -158,31 +156,3 @@ export const ActivityChart = ({ userId }: ActivitiyChartProps) => {
 		</div>
 	);
 };
-
-
-//////
-
-
-
-
-/*
-
-const CustomTooltip = ({
-	active,
-	payload,
-}: {
-	active: boolean;
-	payload: { value: string }[];
-}) => {
-	if (active && payload && payload.length) {
-		return (
-			<div className="custom__tooltip">
-				<p className="custom__tooltip__label">{`${payload[1].value}kg`}</p>
-				<p className="custom__tooltip__intro">{`${payload[0].value}Kcal`}</p>
-			</div>
-		);
-	}
-
-	return null;
-};
-*/

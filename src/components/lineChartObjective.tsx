@@ -8,8 +8,9 @@ import {
 	ResponsiveContainer,
 } from "recharts";
 import './lineChart.scss'
-import { getUserAverageInMemory } from "../get-user-average-sesssions";
-import type { Session } from "../get-user-average-sesssions";
+import { getUserAverageInMemory } from "../usecases/get-user-average-sessions";
+//import {getUserAverage} from "../usecases/get-user-average-sessions"
+import type { Session } from "../infra/user.api";
 import { ContentType } from "recharts/types/component/DefaultLegendContent";
 
 type LineChartObjectiveProps = {
@@ -26,25 +27,19 @@ type TooltipCustomProps = {
 	];
 	active: boolean;
 	label: string | number;
-	
 };
-
-
 
 const TooltipCustom = ({
 	payload,
 	active,
 	
-	
-	
 }: TooltipCustomProps): ContentType | null => {
 	if (active && payload && payload.length) {
 		return (
 			<div className="custom-tooltip">
-			{/* 	<p className="label">{`${label} : ${payload[0].value}`}</p>
-				<p className="desc"> min.</p>*/ }
+		
 				<p className="label" >{`${payload[0].value} min.`}</p>
-			</div> //customiser
+			</div>
 		);
 	}
 
@@ -69,9 +64,25 @@ export const LineChartObjective = ({ userId }: LineChartObjectiveProps) => {
 	const [average, setAverage] = useState<Session[]>([]);
 
 	useEffect(() => {
-		const data = getUserAverageInMemory();
-		setAverage(data.sessions);
-	}, []);
+		//const data =  getUserAverageInMemory();
+		const fetchAverage = async () => {
+			try {
+				const data = await getUserAverageInMemory({ userId });
+				console.log("Données récupérées:", data);
+				setAverage(data.sessions);
+				console.log("État average après mise à jour:", average);
+			} catch (error) {
+				console.error(
+					"Erreur lors de la récupération",
+					error
+				);
+				setAverage([]); 
+			}
+		
+		}
+		fetchAverage();
+
+	}, [userId]);
 
 	if (average.length === 0) return null;
 

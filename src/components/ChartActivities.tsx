@@ -1,11 +1,11 @@
-import "../../styles/chartActivities.scss";
-
+import "./chartActivities.scss";
 import { ActivityChart } from "./ActivityChart.tsx";
 import { LineChartObjective } from "./lineChartObjective.tsx";
 import PerformanceRadarChart from "./PerformanceRadarChart.tsx";
 import ScoreChart from "./ScoreChart.tsx";
 import { CaloriesBox } from "./CaloriesBox.tsx";
-import type { UserDataResponse } from "../get-user-data";
+import type { UserDataResponse } from "../model/user.interface.ts";
+//import type { UserDataResponse } from "../usecases/get-user-data";
 
 type ChartActivitiesProps = {
 	user: UserDataResponse;
@@ -23,6 +23,7 @@ const ChartActivities = ({ user }: ChartActivitiesProps) => {
 				</div>
 			</div>
 			<CaloriesBox keyData={user.keyData} />
+			
 		</>
 	);
 };

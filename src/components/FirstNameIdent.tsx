@@ -1,11 +1,8 @@
-
-
 import React from "react";
-import "../../styles/firstName.scss";
+import "./firstName.scss";
 
 interface FirstNameIdentProps {
 	firstName: string;
-	
 }
 
 const FirstNameIdent: React.FC<FirstNameIdentProps> = ({ firstName }) => {

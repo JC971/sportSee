@@ -1,6 +1,6 @@
-import logo from "../../assets/logo.svg";
-import logoText from "../../assets/logoText.svg";
-import "../../styles/topHeader.css";
+import logo from "../assets/logo.svg";
+import logoText from "../assets/logoText.svg";
+import "../styles/topHeader.css";
 
 
 const TopHeader = () => {

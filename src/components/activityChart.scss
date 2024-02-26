@@ -1,0 +1,35 @@
+.custom-tooltip {
+	background-color: #e60000;
+	padding-top: 10px;
+	width: 39px;
+	height: 63px;
+
+	.tool-style {
+		text-align: center;
+	}
+}
+.custom__tooltip {
+	background-color: red;
+	width: 39px;
+	height: 63px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	padding: 4px;
+	font-size: 7px;
+}
+
+.custom__tooltip__label,
+.custom__tooltip__intro {
+	color: white;
+}
+
+.activity-title {
+	color: #20253a;
+	font-size: 15px;
+	font-weight: 500;
+	padding-left: 32px;
+	position: absolute;
+	top: 295px;
+}

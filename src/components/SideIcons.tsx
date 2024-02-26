@@ -1,9 +1,9 @@
-import "../../styles/sideIcons.scss";
-import yoga from "../../assets/yoga.svg";
-import swimmer from "../../assets/swimmer.svg";
-import cyclist from "../../assets/cyclist.svg";
-import dumbbell from "../../assets/dumbbell.svg";
-import copyright from "../../assets/copyright.png"
+import "./sideIcons.scss";
+import yoga from "../assets/yoga.svg";
+import swimmer from "../assets/swimmer.svg";
+import cyclist from "../assets/cyclist.svg";
+import dumbbell from "../assets/dumbbell.svg";
+import copyright from "../assets/copyright.png"
 
 const SideIcons = () => {
 	return (

@@ -6,7 +6,7 @@ import {
 	PolarAngleAxis,
 	ResponsiveContainer,
 } from "recharts";
-import { getUserPerformanceInMemory } from "../get-user-performance";
+import { getUserPerformanceInMemory } from "../usecases/get-user-performance";
 
 interface KindMap {
 	[key: number]: string;
