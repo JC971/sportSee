@@ -26,16 +26,41 @@ export type UserDataApi = {
 
 /////////////////////////////
 
-export type Session = {
+export type ActivitySession = {
+	day: string;
+	kilogram: number;
+	calories: number;
+};
+
+export type UserActivityApi = {
+	userId: number;
+	sessions: ActivitySession[];
+};
+///////////////////////////////////////
+
+export type PerformanceData = {
+	value: number;
+	kind: number;
+};
+
+export type UserPerformanceDataApi = {
+	userId: number;
+	kind: {
+		[key: number]: string;
+	};
+	data: PerformanceData[];
+};
+
+///////////////////////////////////
+export type AverageSessions = {
 	day: number;
 	sessionLength: number;
 };
 
-/*export type UserAverageResponse = {
+export type UserAverageApi = {
 	userId: number;
-	sessions: Session[];
-};*///////////////////////////////////////
-
+	sessions: AverageSessions[];
+};
 
 // cette fonction permet de transformer l'objet reçu par le back-end vers celui qui  UserDataResponse qui le format qui nous intéresse
 const mappingApiUserToUserDataResponse = (
@@ -48,6 +73,22 @@ const mappingApiUserToUserDataResponse = (
 		todayScorePercentage,
 	};
 };
+
+const mappingApiUserAverageSessionToUserAverageSessionResponse = (
+	userApi: UserAverageApi
+): UserAverageResponse => {
+	const daysAbr = ["L", "M", "M", "J", "V", "S", "D"];
+
+	const result = userApi.sessions.map((session) => ({
+		...session, day: daysAbr[session.day - 1]
+	}))
+
+	return {
+		userId: userApi.userId,
+		sessions: result
+	}
+};
+
 
 export class ApiUser implements UserGateway {
 	async getUserData({ userId }: { userId: number }): Promise<UserDataResponse> {
@@ -66,8 +107,6 @@ export class ApiUser implements UserGateway {
 		}
 	}
 
-	
-
 	async getUserActivity({
 		userId,
 	}: {
@@ -81,7 +120,7 @@ export class ApiUser implements UserGateway {
 				throw new Error(`Erreur du réseau: ${response.status}`);
 			}
 
-			const { data } = await response.json();
+			const { data }: { data: UserActivityApi } = await response.json();
 
 			return data;
 		} catch (error) {
@@ -92,7 +131,6 @@ export class ApiUser implements UserGateway {
 			throw error;
 		}
 	}
-
 
 	async getUserAverage({
 		userId,
@@ -106,9 +144,9 @@ export class ApiUser implements UserGateway {
 			if (!response.ok) {
 				throw new Error(`Erreur du réseau: ${response.status}`);
 			}
-			const data: UserAverageResponse = await response.json();
+			const { data }: { data: UserAverageApi } = await response.json();
 
-			return data;
+			return mappingApiUserAverageSessionToUserAverageSessionResponse(data);
 		} catch (error) {
 			console.error(
 				"Erreur lors de la récupération des données utilisateur",

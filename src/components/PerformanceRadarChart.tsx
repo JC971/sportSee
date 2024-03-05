@@ -8,21 +8,6 @@ import {
 } from "recharts";
 import { getUserPerformanceInMemory } from "../usecases/get-user-performance";
 
-interface KindMap {
-	[key: number]: string;
-}
-
-interface UserPerformance {
-	userId: number;
-	kind: KindMap;
-	data: Array<{ value: number; kind: number }>;
-}
-
-interface RadarChartData {
-	subject: string;
-	value: number;
-}
-
 export default class PerformanceRadarChart extends PureComponent<
 	{},
 	{ data: any[] }
@@ -37,6 +22,8 @@ export default class PerformanceRadarChart extends PureComponent<
 	}
 
 	componentDidMount() {
+		//mapping user api
+		// getUserPerformance
 		const userPerformanceData = getUserPerformanceInMemory();
 		const activityNameMap = {
 			1: "Cardio",

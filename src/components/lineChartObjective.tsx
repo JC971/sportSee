@@ -7,10 +7,9 @@ import {
 	Tooltip,
 	ResponsiveContainer,
 } from "recharts";
-import './lineChart.scss'
-import { getUserAverageInMemory } from "../usecases/get-user-average-sessions";
-//import {getUserAverage} from "../usecases/get-user-average-sessions"
-import type { Session } from "../infra/user.api";
+import "./lineChart.scss";
+import { getUserAverage } from "../usecases/get-user-average-sessions";
+import type { AverageSessions } from "../model/user.interface";
 import { ContentType } from "recharts/types/component/DefaultLegendContent";
 
 type LineChartObjectiveProps = {
@@ -22,7 +21,6 @@ type TooltipCustomProps = {
 		{
 			value: string;
 			color: string;
-			
 		}
 	];
 	active: boolean;
@@ -32,13 +30,11 @@ type TooltipCustomProps = {
 const TooltipCustom = ({
 	payload,
 	active,
-	
 }: TooltipCustomProps): ContentType | null => {
 	if (active && payload && payload.length) {
 		return (
 			<div className="custom-tooltip">
-		
-				<p className="label" >{`${payload[0].value} min.`}</p>
+				<p className="label">{`${payload[0].value} min.`}</p>
 			</div>
 		);
 	}
@@ -61,27 +57,23 @@ const CustomHover = (props: any) => {
 };
 
 export const LineChartObjective = ({ userId }: LineChartObjectiveProps) => {
-	const [average, setAverage] = useState<Session[]>([]);
+	const [average, setAverage] = useState<AverageSessions[]>([]);
 
 	useEffect(() => {
-		//const data =  getUserAverageInMemory();
 		const fetchAverage = async () => {
 			try {
-				const data = await getUserAverageInMemory({ userId });
-				console.log("Données récupérées:", data);
-				setAverage(data.sessions);
-				console.log("État average après mise à jour:", average);
+				const response = await getUserAverage({ userId });
+				if (response && response.sessions) {
+					setAverage(response.sessions);
+				} else {
+					setAverage([]);
+				}
 			} catch (error) {
-				console.error(
-					"Erreur lors de la récupération",
-					error
-				);
-				setAverage([]); 
+				console.error("Erreur lors de la récupération", error);
+				setAverage([]);
 			}
-		
-		}
+		};
 		fetchAverage();
-
 	}, [userId]);
 
 	if (average.length === 0) return null;
@@ -114,10 +106,6 @@ export const LineChartObjective = ({ userId }: LineChartObjectiveProps) => {
 						tick={{ opacity: "0.5" }}
 						strokeOpacity={0.5}
 						stroke="#FFFFFF"
-						tickFormatter={(day) => {
-							const daysAbr = ["L", "M", "M", "J", "V", "S", "D"];
-							return daysAbr[day - 1];
-						}}
 					/>
 					<YAxis
 						hide
@@ -137,10 +125,9 @@ export const LineChartObjective = ({ userId }: LineChartObjectiveProps) => {
 						dot={false}
 						activeDot={{ stroke: "rgba(255,255,255,0.2)", strokeWidth: 10 }}
 					/>
-					<Line/>
+					<Line />
 				</LineChart>
 			</ResponsiveContainer>
 		</div>
 	);
 };
-

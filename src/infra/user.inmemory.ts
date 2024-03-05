@@ -85,34 +85,45 @@ export class InMemoryUser implements UserGateway {
 			userId: 12,
 			sessions: [
 				{
-					day: 1,
+					day: "L",
 					sessionLength: 30,
 				},
 				{
-					day: 2,
+					day: "M",
 					sessionLength: 23,
 				},
 				{
-					day: 3,
+					day: "M",
 					sessionLength: 45,
 				},
 				{
-					day: 4,
+					day: "J",
 					sessionLength: 50,
 				},
 				{
-					day: 5,
+					day: "V",
 					sessionLength: 0,
 				},
 				{
-					day: 6,
+					day: "S",
 					sessionLength: 0,
 				},
 				{
-					day: 7,
+					day: "D",
 					sessionLength: 60,
 				},
 			],
 		});
+	}
+	getUserPerformance({ userId }: { userId: number }): Promise<any> {
+		// pas de mapping, renvoie directement cette affichage
+		/* 
+					1: "Cardio",
+			2: "Energie",
+			3: "Endurance",
+			4: "Force",
+			5: "Vitesse",
+			6: "Intensité",
+			*/
 	}
 }

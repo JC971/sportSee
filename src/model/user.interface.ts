@@ -29,13 +29,18 @@ export type UserActivityResponse = {
 };
 
 export type AverageSessions = {
-	day: number;
+	day: string;
 	sessionLength: number;
 };
 
 export type UserAverageResponse = {
 	userId: number;
 	sessions: AverageSessions[];
+};
+
+export type UserAveragePerformance = {
+	userId: number;
+	// ici rajouter les propriétés "custom" , si besoin d'un tableau, le mettre ici poru qu'il y est répercussion côté api et inmemory
 };
 
 export interface UserGateway {
@@ -46,4 +51,5 @@ export interface UserGateway {
 	}): Promise<UserActivityResponse>;
 	getUserData({ userId }: { userId: number }): Promise<UserDataResponse>;
 	getUserAverage({ userId }: { userId: number }): Promise<UserAverageResponse>;
+	// getUserPerformance
 }
