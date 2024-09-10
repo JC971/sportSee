@@ -3,10 +3,10 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import "./score.scss";
 import { getUserData } from "../usecases/get-user-data";
 import { USER } from "../main";
-import { UserDataResponse } from "../model/user.interface";
+import { UserData } from "../model/user.interface";
 
 const ScorePieChart = () => {
-	const [userData, setUserData] = useState<UserDataResponse | null> (null);
+	const [userData, setUserData] = useState<UserData | null>(null);
 
 	useEffect(() => {
 		const fetchUser = async () => {
@@ -62,6 +62,5 @@ const ScorePieChart = () => {
 		</div>
 	);
 };
-
 
 export default ScorePieChart;

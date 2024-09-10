@@ -1,10 +1,11 @@
 import {
-	UserActivityResponse,
-	UserDataResponse,
-	UserAverageResponse,
+	UserActivity,
+	UserData,
+	UserAverage,
 	UserGateway,
+	UserPerformance,
 } from "../model/user.interface";
-//import { UserAverageResponse } from "./user.api";
+//import { UserAverage } from "./user.api";
 
 // c'est la class de mock (même si ici on appel ça un fake), elle implémente l'interface UserGateway qui permet
 // de vérifier qu'il y a bien les bonnes méthodes et les bons objets en retour
@@ -13,10 +14,10 @@ export class InMemoryUser implements UserGateway {
 		userId,
 	}: {
 		userId: number;
-	}): Promise<UserActivityResponse> {
+	}): Promise<UserActivity> {
 		throw new Error("Method not implemented.");
 	}
-	getUserData({ userId }: { userId: number }): Promise<UserDataResponse> {
+	getUserData({ userId }: { userId: number }): Promise<UserData> {
 		return Promise.resolve({
 			id: 12,
 			userInfos: {
@@ -34,11 +35,7 @@ export class InMemoryUser implements UserGateway {
 			},
 		});
 	}
-	getUserActivity({
-		userId,
-	}: {
-		userId: number;
-	}): Promise<UserActivityResponse> {
+	getUserActivity({ userId }: { userId: number }): Promise<UserActivity> {
 		return Promise.resolve({
 			userId: 12,
 			sessions: [
@@ -80,7 +77,7 @@ export class InMemoryUser implements UserGateway {
 			],
 		});
 	}
-	getUserAverage({ userId }: { userId: number }): Promise<UserAverageResponse> {
+	getUserAverage({ userId }: { userId: number }): Promise<UserAverage> {
 		return Promise.resolve({
 			userId: 12,
 			sessions: [
@@ -115,15 +112,35 @@ export class InMemoryUser implements UserGateway {
 			],
 		});
 	}
-	getUserPerformance({ userId }: { userId: number }): Promise<any> {
-		// pas de mapping, renvoie directement cette affichage
-		/* 
-					1: "Cardio",
-			2: "Energie",
-			3: "Endurance",
-			4: "Force",
-			5: "Vitesse",
-			6: "Intensité",
-			*/
+	getUserPerformance({ userId }: { userId: number }): Promise<UserPerformance> {
+		return Promise.resolve({
+			userId: 12,
+			data: [
+				{
+					value: 80,
+					subject: "Cardio",
+				},
+				{
+					value: 120,
+					subject: "Energy",
+				},
+				{
+					value: 140,
+					subject: "Endurance",
+				},
+				{
+					value: 50,
+					subject: "Strength",
+				},
+				{
+					value: 200,
+					subject: "Speed",
+				},
+				{
+					value: 90,
+					subject: "Intensity",
+				},
+			],
+		});
 	}
 }

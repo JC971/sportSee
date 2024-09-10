@@ -1,12 +1,13 @@
 import { userLoader } from "../main";
-import { UserActivityResponse } from "../model/user.interface";
+import { UserActivity } from "../model/user.interface";
 
 export const getUserActivity = async ({
-  userId,
+	userId,
 }: {
-  userId: number;
-}): Promise<UserActivityResponse> => {
-  const userData = userLoader().getUserActivity({ userId });
+	userId: number;
+}): Promise<UserActivity> => {
+	const userData = userLoader().getUserActivity({ userId });
 
-  return userData;
+	return userData;
 };
+//gestion erreur

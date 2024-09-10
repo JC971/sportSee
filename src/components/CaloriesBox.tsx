@@ -7,7 +7,7 @@ import CaloriesIcon from "../assets/calories-icon.svg";
 import lipides from "../assets/fat-icon.svg";
 import glucides from "../assets/glucides-icon.png";
 
-type CaloriesBoxProps = {
+type CaloriesBoxProps = {//ok
 	keyData: KeyData;
 };
 

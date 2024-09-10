@@ -5,7 +5,7 @@ export type KeyData = {
 	lipidCount: number;
 };
 
-export type UserDataResponse = {
+export type UserData = {
 	id: number;
 	userInfos: {
 		firstName: string;
@@ -23,7 +23,7 @@ export type Session = {
 	calories: number;
 };
 
-export type UserActivityResponse = {
+export type UserActivity = {
 	userId: number;
 	sessions: Session[];
 };
@@ -33,23 +33,24 @@ export type AverageSessions = {
 	sessionLength: number;
 };
 
-export type UserAverageResponse = {
+export type UserAverage = {
 	userId: number;
 	sessions: AverageSessions[];
 };
 
-export type UserAveragePerformance = {
+export type UserPerformanceData = {
+	value: number;
+	subject: string;
+};
+
+export type UserPerformance = {
 	userId: number;
-	// ici rajouter les propriétés "custom" , si besoin d'un tableau, le mettre ici poru qu'il y est répercussion côté api et inmemory
+	data: UserPerformanceData[];
 };
 
 export interface UserGateway {
-	getUserActivity({
-		userId,
-	}: {
-		userId: number;
-	}): Promise<UserActivityResponse>;
-	getUserData({ userId }: { userId: number }): Promise<UserDataResponse>;
-	getUserAverage({ userId }: { userId: number }): Promise<UserAverageResponse>;
-	// getUserPerformance
+	getUserActivity({ userId }: { userId: number }): Promise<UserActivity>;
+	getUserData({ userId }: { userId: number }): Promise<UserData>;
+	getUserAverage({ userId }: { userId: number }): Promise<UserAverage>;
+	getUserPerformance({ userId }: { userId: number }): Promise<UserPerformance>;
 }

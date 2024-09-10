@@ -1,14 +1,13 @@
 import "./chartActivities.scss";
 import { ActivityChart } from "./ActivityChart.tsx";
 import { LineChartObjective } from "./lineChartObjective.tsx";
-import PerformanceRadarChart from "./PerformanceRadarChart.tsx";
+import { PerformanceRadarChart } from "./PerformanceRadarChart.tsx";
 import ScoreChart from "./ScoreChart.tsx";
 import { CaloriesBox } from "./CaloriesBox.tsx";
-import type { UserDataResponse } from "../model/user.interface.ts";
-//import type { UserDataResponse } from "../usecases/get-user-data";
+import type { UserData } from "../model/user.interface.ts";
 
 type ChartActivitiesProps = {
-	user: UserDataResponse;
+	user: UserData;
 };
 
 const ChartActivities = ({ user }: ChartActivitiesProps) => {
@@ -18,12 +17,11 @@ const ChartActivities = ({ user }: ChartActivitiesProps) => {
 				<ActivityChart userId={user.id} />
 				<div className="charts">
 					<LineChartObjective userId={user.id} />
-					<PerformanceRadarChart />
+					<PerformanceRadarChart userId={user.id} />
 					<ScoreChart />
 				</div>
 			</div>
 			<CaloriesBox keyData={user.keyData} />
-			
 		</>
 	);
 };

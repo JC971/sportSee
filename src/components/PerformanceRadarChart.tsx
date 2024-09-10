@@ -1,4 +1,4 @@
-import { PureComponent } from "react";
+import { useEffect, useState } from "react";
 import {
 	Radar,
 	RadarChart,
@@ -6,71 +6,48 @@ import {
 	PolarAngleAxis,
 	ResponsiveContainer,
 } from "recharts";
-import { getUserPerformanceInMemory } from "../usecases/get-user-performance";
+import { getUserPerformance } from "../usecases/get-user-performance";
+import { UserPerformanceData } from "../model/user.interface";
 
-export default class PerformanceRadarChart extends PureComponent<
-	{},
-	{ data: any[] }
-> {
-	static demoUrl = "https://codesandbox.io/s/simple-radar-chart-rjoc6";
+export const PerformanceRadarChart = ({ userId }: { userId: number }) => {
+	const [performance, setPerformance] = useState<UserPerformanceData[]>([]);
 
-	constructor(props: {}) {
-		super(props);
-		this.state = {
-			data: [],
+	useEffect(() => {
+		const fetchPerformance = async () => {
+			try {
+				const response = await getUserPerformance({ userId });
+				if (response) {
+					setPerformance(response.data);
+				} else {
+					setPerformance([]);
+				}
+			} catch (error) {
+				console.error("Erreur lors de la récupération", error);
+				setPerformance([]);
+			}
 		};
-	}
+		fetchPerformance();
+	}, [userId]);
 
-	componentDidMount() {
-		//mapping user api
-		// getUserPerformance
-		const userPerformanceData = getUserPerformanceInMemory();
-		const activityNameMap = {
-			1: "Cardio",
-			2: "Energie",
-			3: "Endurance",
-			4: "Force",
-			5: "Vitesse",
-			6: "Intensité",
-		};
+	return (
+		<div className="performances">
+			<ResponsiveContainer width="100%" height="100%">
+				<RadarChart cx="50%" cy="50%" outerRadius="70%" data={performance}>
+					<PolarGrid />
+					<PolarAngleAxis
+						dataKey="subject"
+						style={{ fontSize: "12px", fontWeight: "500" }}
+					/>
 
-		const adaptedData = userPerformanceData.data.map((item) => {
-			const newName = activityNameMap[item.kind];
-			return {
-				subject: newName,
-				value: item.value,
-			};
-		});
-
-		this.setState({ data: adaptedData });
-	}
-
-	render() {
-		return (
-			<div className="performances">
-				<ResponsiveContainer width="100%" height="100%">
-					<RadarChart
-						cx="50%"
-						cy="50%"
-						outerRadius="70%"
-						data={this.state.data}
-					>
-						<PolarGrid />
-						<PolarAngleAxis
-							dataKey="subject"
-							style={{ fontSize: "12px", fontWeight: "500" }}
-						/>
-
-						<Radar
-							name="User Performance"
-							dataKey="value"
-							stroke="#FFFFFF"
-							strokeWidth={0.5}
-							fill="#FF0101B2"
-						/>
-					</RadarChart>
-				</ResponsiveContainer>
-			</div>
-		);
-	}
-}
+					<Radar
+						name="User Performance"
+						dataKey="value"
+						stroke="#FFFFFF"
+						strokeWidth={0.5}
+						fill="#FF0101B2"
+					/>
+				</RadarChart>
+			</ResponsiveContainer>
+		</div>
+	);
+};

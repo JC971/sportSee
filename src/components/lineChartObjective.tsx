@@ -12,7 +12,7 @@ import { getUserAverage } from "../usecases/get-user-average-sessions";
 import type { AverageSessions } from "../model/user.interface";
 import { ContentType } from "recharts/types/component/DefaultLegendContent";
 
-type LineChartObjectiveProps = {
+type LineChartObjectiveProps = {//ok
 	userId: number;
 };
 

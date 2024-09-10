@@ -1,11 +1,11 @@
 import { userLoader } from "../main";
-import { UserAverageResponse } from "../model/user.interface";
+import { UserAverage} from "../model/user.interface";
 
 export const getUserAverage = async ({
 	userId,
 }: {
 	userId: number;
-}): Promise<UserAverageResponse> => {
+}): Promise<UserAverage> => {
 	const userAverage = userLoader().getUserAverage({ userId });
 
 	return userAverage;

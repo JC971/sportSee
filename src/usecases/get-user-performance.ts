@@ -1,4 +1,4 @@
-export type userPerformanceResponse = {
+/*export type userPerformanceResponse = {//ok
 	userId: number;
 	kind: {
 		1: string;
@@ -74,4 +74,17 @@ export const getUserPerformance = async ({
 				},
 			],
 		};
+ };*/
+
+ import { userLoader } from "../main";
+ import { UserPerformance } from "../model/user.interface";
+
+ export const getUserPerformance = async ({
+		userId,
+ }: {
+		userId: number;
+ }): Promise<UserPerformance> => {
+		const userData = userLoader().getUserPerformance({ userId });
+
+		return userData;
  };

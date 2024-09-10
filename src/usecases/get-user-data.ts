@@ -1,11 +1,11 @@
 import { userLoader } from "../main";
-import { UserDataResponse } from "../model/user.interface";
+import { UserData } from "../model/user.interface";
 
 export const getUserData = async ({
   userId,
 }: {
   userId: number;
-}): Promise<UserDataResponse> => {
+}): Promise<UserData> => {
   const userData = userLoader().getUserData({ userId });
 
   return userData;

@@ -1,10 +1,11 @@
 import {
-	UserActivityResponse,
-	UserDataResponse,
-	UserAverageResponse,
+	UserActivity,
+	UserData,
+	UserAverage,
 	UserGateway,
+	UserPerformance,
 } from "../model/user.interface";
-
+//mapping
 // Ceci est le type de ce qu'on récupère côté back-end
 export type KeyData = {
 	calorieCount: number;
@@ -62,10 +63,25 @@ export type UserAverageApi = {
 	sessions: AverageSessions[];
 };
 
-// cette fonction permet de transformer l'objet reçu par le back-end vers celui qui  UserDataResponse qui le format qui nous intéresse
-const mappingApiUserToUserDataResponse = (
-	userApi: UserDataApi
-): UserDataResponse => {
+////////////////////////////////////
+export type UserPerformanceApi = {
+	userId: number;
+	kind: {
+		1: string;
+		2: string;
+		3: string;
+		4: string;
+		5: string;
+		6: string;
+	};
+	data: Array<{
+		value: number;
+		kind: number;
+	}>;
+};
+
+// cette fonction permet de transformer l'objet reçu par le back-end vers celui qui  UserData qui le format qui nous intéresse
+const mappingApiUserToUserData = (userApi: UserDataApi): UserData => {
 	const todayScorePercentage = userApi.todayScore * 100;
 
 	return {
@@ -74,24 +90,50 @@ const mappingApiUserToUserDataResponse = (
 	};
 };
 
-const mappingApiUserAverageSessionToUserAverageSessionResponse = (
+const mappingApiUserAverageSessionToUserAverageSession = (
 	userApi: UserAverageApi
-): UserAverageResponse => {
+): UserAverage => {
 	const daysAbr = ["L", "M", "M", "J", "V", "S", "D"];
 
 	const result = userApi.sessions.map((session) => ({
-		...session, day: daysAbr[session.day - 1]
-	}))
+		...session,
+		day: daysAbr[session.day - 1],
+	}));
 
 	return {
 		userId: userApi.userId,
-		sessions: result
-	}
+		sessions: result,
+	};
 };
 
+const mappingApiUserPerformanceToUserPerformance = (
+	userApi: UserPerformanceApi
+): UserPerformance => {
+	const activityNameMap: { [key: number]: string } = {
+		1: "Cardio",
+		2: "Energie",
+		3: "Endurance",
+		4: "Force",
+		5: "Vitesse",
+		6: "Intensité",
+	};
+
+	const result = userApi.data.map((item) => {
+		const newName = activityNameMap[item.kind];
+		return {
+			subject: newName,
+			value: item.value,
+		};
+	});
+
+	return {
+		userId: userApi.userId,
+		data: result,
+	};
+};
 
 export class ApiUser implements UserGateway {
-	async getUserData({ userId }: { userId: number }): Promise<UserDataResponse> {
+	async getUserData({ userId }: { userId: number }): Promise<UserData> {
 		try {
 			const response = await fetch(`http://localhost:3000/user/${userId}`);
 			if (!response.ok) {
@@ -100,18 +142,14 @@ export class ApiUser implements UserGateway {
 
 			const { data } = await response.json();
 
-			return mappingApiUserToUserDataResponse(data);
+			return mappingApiUserToUserData(data);
 		} catch (error) {
 			console.error("Erreur lors de la récupération des données", error);
 			throw error;
 		}
 	}
 
-	async getUserActivity({
-		userId,
-	}: {
-		userId: number;
-	}): Promise<UserActivityResponse> {
+	async getUserActivity({ userId }: { userId: number }): Promise<UserActivity> {
 		try {
 			const response = await fetch(
 				`http://localhost:3000/user/${userId}/activity`
@@ -132,11 +170,7 @@ export class ApiUser implements UserGateway {
 		}
 	}
 
-	async getUserAverage({
-		userId,
-	}: {
-		userId: number;
-	}): Promise<UserAverageResponse> {
+	async getUserAverage({ userId }: { userId: number }): Promise<UserAverage> {
 		try {
 			const response = await fetch(
 				`http://localhost:3000/user/${userId}/average-sessions`
@@ -146,12 +180,34 @@ export class ApiUser implements UserGateway {
 			}
 			const { data }: { data: UserAverageApi } = await response.json();
 
-			return mappingApiUserAverageSessionToUserAverageSessionResponse(data);
+			return mappingApiUserAverageSessionToUserAverageSession(data);
 		} catch (error) {
 			console.error(
 				"Erreur lors de la récupération des données utilisateur",
 				error
 			);
+			throw error;
+		}
+	}
+
+	async getUserPerformance({
+		userId,
+	}: {
+		userId: number;
+	}): Promise<UserPerformance> {
+		try {
+			const response = await fetch(
+				`http://localhost:3000/user/${userId}/performance`
+			);
+			if (!response.ok) {
+				throw new Error(`Erreur du réseau: ${response.status}`);
+			}
+
+			const { data }: { data: UserPerformanceApi } = await response.json();
+
+			return mappingApiUserPerformanceToUserPerformance(data);
+		} catch (error) {
+			console.error("Erreur lors de la récupération des données ...", error);
 			throw error;
 		}
 	}

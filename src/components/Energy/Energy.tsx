@@ -1,7 +1,7 @@
 import "./Energy.scss";
 import { ReactNode } from "react";
 
-type EnergyProps = {
+type EnergyProps = {//ok
 	count: number;
 	title: string;
 	icon: ReactNode; 
